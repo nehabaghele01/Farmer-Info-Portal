@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Farmer Information Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Farmer Information Portal</h1>
+    <p>Empowering farmers with knowledge</p>
+    <button onclick="googleTranslateElementInit()">🌐 Translate to Hindi</button>
+    <div id="google_translate_element"></div>
+  </header>
+
+  <main>
+    <section id="weather">
+      <h2>🌦 Weather Forecast</h2>
+      <p id="weatherData">Loading...</p>
+    </section>
+
+    <section id="prices">
+      <h2>🌾 Crop Market Prices</h2>
+      <table id="priceTable">
+        <tr><th>Crop</th><th>Price (₹/Quintal)</th></tr>
+      </table>
+    </section>
+
+    <section id="tips">
+      <h2>📋 Farming Tips</h2>
+      <ul>
+        <li>Use drip irrigation to save water.</li>
+        <li>Use organic fertilizers to improve soil health.</li>
+        <li>Plant seasonal crops for higher yield.</li>
+      </ul>
+    </section>
+
+    <section id="schemes">
+      <h2>📢 Government Schemes</h2>
+      <marquee>PM Kisan Samman Nidhi Yojana: ₹6,000 per year. Register today!</marquee>
+    </section>
+
+    <section id="feedback">
+      <h2>📬 Feedback / Contact Us</h2>
+      <form id="feedbackForm">
+        <input type="text" placeholder="Your Name" required><br />
+        <input type="email" placeholder="Your Email" required><br />
+        <textarea placeholder="Your Message" rows="4" required></textarea><br />
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Farmer's Portal | Made by Neha Baghele</p>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- Google Translate -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', includedLanguages: 'hi' },
+      'google_translate_element'
+    );
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- Crop Price from Google Sheets -->
+<script>
+  const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTm9Y28KKo4OMQhRVnOPCsnZVCuc2tmJxP860VeTklYfKSGKWya6EOCo11F3eFbo2-46QcFD0qW9aSZ/pub?output=csv';
+
+  fetch(sheetURL)
+    .then(response => response.text())
+    .then(csv => {
+      const rows = csv.trim().split('\n').slice(1); 
+      const table = document.getElementById("priceTable");
+
+      rows.forEach(row => {
+        const cols = row.split(",");
+        if (cols.length >= 2) {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td>${cols[0]}</td><td>${cols[1]}</td>`;
+          table.appendChild(tr);
+        }
+      });
+    })
+    .catch(error => {
+      console.error("Error loading crop prices:", error);
+    });
+</script>
+
+
+<script src="script.js"></script>
+
+  </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
+
